@@ -1,0 +1,17 @@
+{
+  "name": "knak-centreon",
+  "version": "0.1.0",
+  "author": "knak",
+  "summary": "Management of Centreon provisioning",
+  "license": "Apache 2.0",
+  "source": "https://github.com/mvisonneau/puppet-centreon.git",
+  "project_page": "https://github.com/mvisonneau/puppet-centreon",
+  "issues_url": "https://github.com/mvisonneau/puppet-centreon/issues",
+  "dependencies": [
+    {
+      "version_range": ">= 1.0.0",
+      "name": "puppetlabs-stdlib"
+    }
+  ]
+}
+
