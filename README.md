@@ -18,6 +18,7 @@ build its configuration.
 
 Centreon server instance :
 
+```puppet
     class { 'centreon::server':
 	  clapi_binaries     =>  '/app/centreon/www/modules/centreon-clapi/core',
 	  clapi_username     =>  'admin',
@@ -26,10 +27,13 @@ Centreon server instance :
 	  clapi_log_file     =>  '/var/log/centpollers.log',
 	  poller_name        =>  'central',
     }
+```
 
 Centreon client instances :
 
+```puppet
     class { 'centreon::client': }
+```
 
 ## Roadmap
 
