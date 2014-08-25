@@ -9,9 +9,8 @@
   "issues_url": "https://github.com/mvisonneau/puppet-centreon/issues",
   "dependencies": [
     {
-      "version_range": ">= 1.0.0",
-      "name": "puppetlabs-stdlib"
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
     }
   ]
 }
-
