@@ -1,6 +1,6 @@
 # == Class: centreon
 #
-# Full description of class centreon here.
+# This class enables you to provision one or several Centreon servers with Puppet, using Centreon CLAPI.
 #
 # === Parameters
 #
@@ -29,13 +29,13 @@
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Maxime VISONNEAU <maxime@visonneau.fr>
 #
 # === Copyright
 #
-# Copyright 2014 Your name here, unless otherwise noted.
+# Apache V2 License
 #
+
 class centreon {
-
-
+  include centreon::server, centreon::client, centreon::packages
 }
