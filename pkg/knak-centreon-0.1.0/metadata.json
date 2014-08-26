@@ -1,6 +1,6 @@
 {
   "name": "knak-centreon",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "author": "knak",
   "summary": "Management of Centreon provisioning",
   "license": "Apache 2.0",

@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# centpollers   Generation of Centreon Pollers Config
+#
+#
+### BEGIN INIT INFO
+# Provides:          centpollers
+# Short-Description: Generation of Centreon Pollers Config
+# Description:       Enable service provided by Puppet and Centreon.
+### END INIT INFO
+
+# Check permissions
+
+uid=`id -u`
+[ $uid -gt 0 ] && { echo "You need to be root" ; exit 4 ; }
+
+clapi_binaries=<%= @clapi_binaries %>
+clapi_username=<%= @clapi_username %>
+clapi_password=<%= @clapi_password %>
+clapi_export_file=<%= @clapi_export_file %>
+clapi_log_file=<%= @clapi_log_file %>
+
+clapi="$clapi_binaries/centreon -u $clapi_username -p$clapi_password"
+
+# Check that binary exists
+if ! [ -f $clapi_binaries/centreon ]
+then
+    echo "Centreon CLAPI binaries not found"
+    exit 5
+fi
+
+# Compute Pollers List
+pollers=`$clapi -a POLLERLIST | head -n -1 | awk '{print $1}'`
+
+case "$1" in
+    start|restart)
+        echo "----> Exporting CLAPI config"
+        $clapi -e > $clapi_export_file
+        if [ $? -ne 0 ] ; then echo "! Error during export of the configuration" ;exit $? ; fi
+	    for i in $pollers
+        do
+            echo "=> Poller ID : $i"
+            echo "- Generating configfiles"
+            $clapi -a POLLERGENERATE -v$i >> $clapi_log_file
+            if [ $? -ne 0 ] ; then echo "! Error during generation of configfiles" ; exit $? ; fi
+            echo "- Testing configfiles"
+            $clapi -a POLLERTEST -v$i >> $clapi_log_file
+            if [ $? -ne 0 ] ; then echo "! Error during test of configfiles" ; exit $? ; fi
+            echo "- Moving configfiles"
+            $clapi -a CFGMOVE -v$i >> $clapi_log_file
+            if [ $? -ne 0 ] ; then echo "! Error during move of configfiles" ;exit $? ; fi
+            echo "- Restarting poller"
+            $clapi -a POLLERRESTART -v$i >> $clapi_log_file
+            if [ $? -ne 0 ] ; then echo "! Error during restart of poller $i" ;exit $? ; fi
+            echo "==> OK"
+        done
+        exit 0
+        ;;
+    stop)
+    	echo "Dummy stop: OK"
+        exit 0
+        ;;
+    status)
+    	echo "Dummy check: OK"
+        exit 0
+        ;;
+    *)
+        echo "Usage: centpollers {start|stop|restart|status}"
+        exit 2
+        ;;
+esac
