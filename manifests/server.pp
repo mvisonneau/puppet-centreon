@@ -1,10 +1,35 @@
+# == Class: centreon::server
+#
+# This class is used in order to configure the centreon server using CLAPI.
+#
+# === Parameters
+#
+#
+#
+# === Variables
+#
+#
+#
+# === Examples
+#
+#
+#
+# === Authors
+#
+# knak - Maxime VISONNEAU <maxime@visonneau.fr>
+#
+# === Copyright
+#
+# Apache V2 License
+#
+
 class centreon::server(
-  $clapi_binaries     =  '/usr/local/centreon/www/modules/centreon-clapi/core',   # CLAPI Binaries path
-  $clapi_username     =  'admin',                                                 # CLAPI Username
-  $clapi_password     =  'password',                                              # CLAPI Password
-  $clapi_export_file  =  '/tmp/clapi.conf',                                       # CLAPI Export file
-  $clapi_log_file     =  '/var/log/centpollers.log',                              # CLAPI Log file
-  $poller_name        =  'central',                                               # Poller name
+  $clapi_binaries     =  '/usr/local/centreon/www/modules/centreon-clapi/core',
+  $clapi_username     =  'admin',
+  $clapi_password     =  'password',
+  $clapi_export_file  =  '/tmp/clapi.conf',
+  $clapi_log_file     =  '/var/log/centpollers.log',
+  $poller_name        =  'central',
 ) {
 
   include centreon::packages
@@ -35,8 +60,8 @@ class centreon::server(
     status   => '/etc/init.d/centpollers status', # Dummy but needed
   }
 
-  file { "/etc/init.d/centpollers":
-    path    => "/etc/init.d/centpollers",
+  file { '/etc/init.d/centpollers':
+    path    => '/etc/init.d/centpollers',
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
@@ -46,8 +71,8 @@ class centreon::server(
 
   file { $clapi_export_file:
     ensure => present,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0700',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0700',
   }
 }
