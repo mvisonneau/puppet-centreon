@@ -1,5 +1,7 @@
 # puppet-centreon
 
+[![Puppet Forge](https://img.shields.io/puppetforge/v/knak/centreon.svg?style=flat-square)](https://forge.puppetlabs.com/knak/centreon)
+
 ## Overview
 
 This module provides the provisioning of nodes onto one or several Centreon monitoring server through CLAPI.
